@@ -11,12 +11,13 @@ import java.util.List;
 @Entity
 public class Auditorium extends BaseModel{
     private String name;
+    private int audiNumber;
     private int capacity;
     @OneToMany
     private List<Seat> seats;
     @OneToMany
     private List<Show> shows;
-    @ElementCollection // Used for multiple Enums
+    @ElementCollection // Used for Multiple Enums
     @Enumerated(EnumType.STRING) //Creates relation between Entity and Enums
     private List<AuditoriumFeature> auditoriumFeatures;
 }

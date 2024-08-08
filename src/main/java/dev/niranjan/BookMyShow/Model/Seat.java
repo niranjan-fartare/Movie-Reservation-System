@@ -1,6 +1,8 @@
 package dev.niranjan.BookMyShow.Model;
 
-import jakarta.persistence.Entity;
+import dev.niranjan.BookMyShow.Model.Constant.SeatStatus;
+import dev.niranjan.BookMyShow.Model.Constant.SeatType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +10,11 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Seat extends BaseModel{
-    private int seatNumber;
+    private String seatNumber;
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType;
+    private int row;
+    private int column;
+    @Enumerated(EnumType.STRING)
+    private SeatStatus seatStatus;
 }

@@ -1,19 +1,18 @@
 package dev.niranjan.BookMyShow.Model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Actor extends BaseModel{
+public class User extends BaseModel{
     private String name;
-    private String address;
     private String email;
-    private int phoneNumber;
-    @ManyToMany
-    private List<Movie> movies;
-
+    @OneToMany
+    private List<Ticket> tickets;
 }

@@ -1,12 +1,15 @@
 package dev.niranjan.BookMyShow.Model;
 
 import dev.niranjan.BookMyShow.Model.Constant.MovieFeatures;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
+
+@Getter
+@Setter
+@Entity
 
 public class Movie extends BaseModel{
     private String title;
@@ -17,6 +20,7 @@ public class Movie extends BaseModel{
     private String rating;
     @ManyToMany
     private List<Actor> actors;
+    @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<MovieFeatures> movieFeatures;
 }

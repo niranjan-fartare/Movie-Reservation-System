@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CityDTO {
+public class TheatreDTO {
     private String name;
-    private String state;
+    private String address;
+    private int cityId;
 }

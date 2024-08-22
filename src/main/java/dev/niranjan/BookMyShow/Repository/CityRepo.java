@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CityRepo extends JpaRepository<City, Integer> {
-    City findByName(String name);
+    City findByName(String cityName);
+    void deleteCityByName(String cityName);
+    boolean existsByName(String cityName);
 }

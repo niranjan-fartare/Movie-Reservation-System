@@ -1,20 +1,17 @@
-package dev.niranjan.BookMyShow.Model;
+package dev.niranjan.BookMyShow.DTO;
 
 import dev.niranjan.BookMyShow.Model.Constant.SeatStatus;
 import dev.niranjan.BookMyShow.Model.Constant.SeatType;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-public class Seat extends BaseModel{
+public class SeatDTO {
     private String seatNumber;
-    @Enumerated(EnumType.STRING)
     private SeatType seatType;
     private int row;
     private int col;
-    @Enumerated(EnumType.STRING)
     private SeatStatus seatStatus;
+    private int auditoriumId;
 }

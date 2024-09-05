@@ -10,5 +10,4 @@ import java.util.List;
 public class BookTicketDTO {
     private List<Integer> showSeatIds;
     private int userId;
-
 }

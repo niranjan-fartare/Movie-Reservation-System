@@ -11,11 +11,24 @@ import lombok.Setter;
 
 // Class to store Seats details for a particular Show
 public class ShowSeat extends BaseModel{
-    private int price;
+//    private int price;
+//    @ManyToOne
+//    private Show show;
+//    @ManyToOne
+//    private Seat seat;
+//    @Enumerated(EnumType.STRING)
+//    private ShowSeatStatus showSeatStatus;
+
+    private double price;
+
     @ManyToOne
     private Show show;
+
     @ManyToOne
     private Seat seat;
+
     @Enumerated(EnumType.STRING)
     private ShowSeatStatus showSeatStatus;
 }
+
+

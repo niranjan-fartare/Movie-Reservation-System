@@ -2,15 +2,18 @@ package dev.niranjan.BookMyShow.Service;
 
 import dev.niranjan.BookMyShow.DTO.AuditoriumDTO;
 import dev.niranjan.BookMyShow.DTO.CityDTO;
+import dev.niranjan.BookMyShow.DTO.ShowDTO;
 import dev.niranjan.BookMyShow.DTO.TheatreDTO;
 import dev.niranjan.BookMyShow.Exception.*;
 import dev.niranjan.BookMyShow.Model.*;
 import dev.niranjan.BookMyShow.Model.Constant.AuditoriumFeature;
 import dev.niranjan.BookMyShow.Model.Constant.SeatStatus;
 import dev.niranjan.BookMyShow.Model.Constant.SeatType;
+import dev.niranjan.BookMyShow.Model.Constant.ShowTiming;
 import dev.niranjan.BookMyShow.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +34,15 @@ public class InitService {
     private SeatRepo seatRepo;
 
     @Autowired
-    private ShowRepo showRepo;
-
-    @Autowired
-    private ShowSeatRepo showSeatRepo;
-
-    @Autowired
-    private MovieRepo movieRepo;
-    @Autowired
     private TheatreRepo theatreRepo;
     @Autowired
     private AudiRepo audiRepo;
-
-    public boolean init() throws CityValidationException, CityNotFoundException, TheatreValidationException, TheatreNotFoundException, AuditoriumValidationException {
-        //Save City
+    @Autowired
+    private MovieRepo movieRepo;
+    @Autowired
+    private ShowService showService;
+    @Transactional
+    public boolean init() throws CityValidationException, CityNotFoundException, TheatreValidationException, TheatreNotFoundException, AuditoriumValidationException, SeatValidationException, SeatNotFoundException, AuditoriumNotFoundException {
         CityDTO cityDTO = new CityDTO();
         cityDTO.setName("Ahmednagar");
         cityDTO.setState("Maharashtra");
@@ -65,7 +63,7 @@ public class InitService {
         AuditoriumDTO auditoriumDTO = new AuditoriumDTO();
         auditoriumDTO.setAudiNumber(1);
         auditoriumDTO.setTheatreId(theatreRepo.getReferenceById(1).getId());
-        auditoriumDTO.setCapacity(10);
+        auditoriumDTO.setCapacity(5);
         auditoriumDTO.setName("Audi01");
         ArrayList<AuditoriumFeature> auditoriumFeatures = new ArrayList<>();
         auditoriumFeatures.add(AuditoriumFeature.IMAX);
@@ -75,24 +73,22 @@ public class InitService {
 
         auditoriumService.saveAuditorium(auditoriumDTO);
 
-        List<Seat> seats = new ArrayList<>();
-        for(int i=1;i<=10;i++){
-            Seat seat = new Seat();
-            seat.setSeatNumber(i+""+i);
-            seat.setSeatStatus(SeatStatus.AVAILABLE);
-            seat.setSeatType(SeatType.GOLD);
-            seat.setCol(i);
-            seat.setRow(i);
-            seatRepo.save(seat);
-            seats.add(seat);
-        }
+        Movie titanic = new Movie();
+        titanic.setTitle("Titanic");
+        titanic.setDescription("A good movie");
+        titanic.setYear(1999);
+        titanic.setDirector("John Rambo");
+        titanic.setGenre("Drama");
+        titanic.setRating(8.9);
+        movieRepo.save(titanic);
 
-        Auditorium savedAudi = audiRepo.findByName("Audi01");
-        savedAudi.setSeats(seats);
-        auditoriumService.saveAuditorium(savedAudi);
+        ShowDTO showDTO = new ShowDTO();
+        showDTO.setTitle("Morning Show");
+        showDTO.setShowTiming(ShowTiming.MORNING);
+        showDTO.setMovieId(titanic.getId());
+        showDTO.setAuditoriumId(auditoriumService.getAuditoriumById(1).getId());
 
-
-
+        showService.saveShow(showDTO);
 
         return true;
     }

@@ -13,9 +13,9 @@ public abstract class BaseModel {
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto Generation of id.
     @Column(name = "ID") //For Setting Column name for id in DB.
     private int id;
-    @Column(name = "CREATED AT")
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private String createdBy;
-    private String updatedBy;
+//    @Column(name = "CREATED AT")
+//    private LocalDateTime createdAt;
+//    private LocalDateTime updatedAt;
+//    private String createdBy;
+//    private String updatedBy;
 }

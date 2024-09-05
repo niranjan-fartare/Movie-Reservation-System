@@ -16,7 +16,7 @@ public class InitController {
     private InitService initService;
 
     @PostMapping("/init")
-    public ResponseEntity<Object> init() throws TheatreNotFoundException, CityNotFoundException, CityValidationException, TheatreValidationException, AuditoriumValidationException {
+    public ResponseEntity<Object> init() throws TheatreNotFoundException, CityNotFoundException, CityValidationException, TheatreValidationException, AuditoriumValidationException, SeatValidationException, SeatNotFoundException, AuditoriumNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(initService.init());
     }
 }

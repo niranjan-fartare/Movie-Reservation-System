@@ -14,10 +14,10 @@ import java.util.List;
 public class Movie extends BaseModel{
     private String title;
     private String description;
-    private String year;
+    private int year;
     private String director;
     private String genre;
-    private String rating;
+    private double rating;
     @ManyToMany
     private List<Actor> actors;
     @ElementCollection

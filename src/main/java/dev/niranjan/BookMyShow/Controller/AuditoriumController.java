@@ -1,9 +1,7 @@
 package dev.niranjan.BookMyShow.Controller;
 
 import dev.niranjan.BookMyShow.DTO.AuditoriumDTO;
-import dev.niranjan.BookMyShow.Exception.AuditoriumNotFoundException;
-import dev.niranjan.BookMyShow.Exception.AuditoriumValidationException;
-import dev.niranjan.BookMyShow.Exception.TheatreNotFoundException;
+import dev.niranjan.BookMyShow.Exception.*;
 import dev.niranjan.BookMyShow.Model.Auditorium;
 import dev.niranjan.BookMyShow.Service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,8 @@ public class AuditoriumController {
             if(auditoriumService.saveAuditorium(auditoriumDTO)){
                 return ResponseEntity.status(HttpStatus.CREATED).body("Auditorium added successfully");
             }
-        } catch (AuditoriumValidationException | TheatreNotFoundException e) {
+        } catch (AuditoriumValidationException | TheatreNotFoundException | SeatNotFoundException |
+                 SeatValidationException | AuditoriumNotFoundException e ) {
                 return ResponseEntity.badRequest().body(e.getMessage());
         }
         return null;

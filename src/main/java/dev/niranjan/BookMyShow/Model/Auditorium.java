@@ -13,9 +13,9 @@ public class Auditorium extends BaseModel{
     private String name;
     private int audiNumber;
     private int capacity;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Seat> seats;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Show> shows;
     @ElementCollection // Used for Multiple Enums
     @Enumerated(EnumType.STRING) //Creates relation between Entity and Enums

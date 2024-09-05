@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SeatRepo extends JpaRepository<Seat, Integer> {
-    boolean existsSeatByRowAndCol(int row, int column);
-    Seat findSeatByRowAndCol(int row, int column);
-    Seat findSeatBySeatNumber(int seatNumber);
-    boolean existsSeatBySeatNumber(int seatNumber);
-    boolean deleteSeatBySeatNumber(int seatNumber);
-    boolean deleteSeatByRowAndCol(int row, int column);
+    boolean existsByRowAndCol(int row, int column);
+    Seat findByRowAndCol(int row, int column);
+    Seat findBySeatNumber(String seatNumber);
+    boolean existsBySeatNumber(String seatNumber);
+    boolean deleteBySeatNumber(String seatNumber);
+    boolean deleteByRowAndCol(int row, int column);
 }

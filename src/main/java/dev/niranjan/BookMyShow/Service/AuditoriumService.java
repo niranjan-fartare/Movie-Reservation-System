@@ -1,15 +1,18 @@
 package dev.niranjan.BookMyShow.Service;
 
 import dev.niranjan.BookMyShow.DTO.AuditoriumDTO;
-import dev.niranjan.BookMyShow.Exception.AuditoriumNotFoundException;
-import dev.niranjan.BookMyShow.Exception.AuditoriumValidationException;
-import dev.niranjan.BookMyShow.Exception.TheatreNotFoundException;
+import dev.niranjan.BookMyShow.DTO.SeatDTO;
+import dev.niranjan.BookMyShow.Exception.*;
 import dev.niranjan.BookMyShow.Model.Auditorium;
+import dev.niranjan.BookMyShow.Model.Constant.SeatStatus;
+import dev.niranjan.BookMyShow.Model.Constant.SeatType;
+import dev.niranjan.BookMyShow.Model.Seat;
 import dev.niranjan.BookMyShow.Model.Theatre;
 import dev.niranjan.BookMyShow.Repository.AudiRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +21,10 @@ public class AuditoriumService {
     private AudiRepo audiRepo;
     @Autowired
     private TheatreService theatreService;
+    @Autowired
+    private SeatService seatService;
 
-    public boolean saveAuditorium(AuditoriumDTO auditoriumDTO) throws AuditoriumValidationException, TheatreNotFoundException {
+    public boolean saveAuditorium(AuditoriumDTO auditoriumDTO) throws AuditoriumValidationException, TheatreNotFoundException, SeatNotFoundException, SeatValidationException, AuditoriumNotFoundException {
         if(auditoriumDTO.getAudiNumber() == 0 || auditoriumDTO.getName().isEmpty()){
             throw new AuditoriumValidationException("Auditorium Name and Number cannot be empty");
         }
@@ -39,12 +44,27 @@ public class AuditoriumService {
         auditorium.setCapacity(auditoriumDTO.getCapacity());
 
         Auditorium savedAuditorium = audiRepo.save(auditorium);
+
+        List<Seat> seats = new ArrayList<>();
+        for(int i=1;i<=auditoriumDTO.getCapacity();i++){
+            SeatDTO seatDTO = new SeatDTO();
+            seatDTO.setSeatNumber(i+""+i);
+            seatDTO.setSeatType(SeatType.GOLD);
+            seatDTO.setRow(i);
+            seatDTO.setCol(i);
+            seatDTO.setSeatStatus(SeatStatus.AVAILABLE);
+            if(seatService.saveSeat(seatDTO)){
+                seats.add(seatService.getSeatByRowAndCol(i,i));
+            }
+        }
+        savedAuditorium.setSeats(seats);
+
         Theatre savedTheatre = theatreService.getTheatreById(auditoriumDTO.getTheatreId());
         List<Auditorium> auditoriums = savedTheatre.getAuditoriums();
         auditoriums.add(savedAuditorium);
         savedTheatre.setAuditoriums(auditoriums);
         theatreService.saveTheatre(savedTheatre);
-        audiRepo.save(auditorium);
+        audiRepo.save(savedAuditorium);
         return true;
     }
 

@@ -1,23 +1,21 @@
 package dev.niranjan.BookMyShow.Model;
 
+import dev.niranjan.BookMyShow.Model.Constant.ShowTiming;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "`show`")
+@Table(name = "shows")
 public class Show extends BaseModel{
     private String title;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    @Enumerated(EnumType.STRING)
+    private ShowTiming showTiming;
     @ManyToOne
     private Movie movie;
-    @ManyToOne
-    private Auditorium auditorium;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<ShowSeat> showSeats;
 }

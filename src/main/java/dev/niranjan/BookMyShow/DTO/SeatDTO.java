@@ -13,5 +13,5 @@ public class SeatDTO {
     private int row;
     private int col;
     private SeatStatus seatStatus;
-    private int auditoriumId;
+    private SeatType type;
 }

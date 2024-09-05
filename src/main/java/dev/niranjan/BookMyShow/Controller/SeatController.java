@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class SeatController {
     @Autowired
@@ -27,7 +29,7 @@ public class SeatController {
     }
 
     @GetMapping("/seat/{seatNumber}")
-    public ResponseEntity<Object> getSeatBySeatNumber(@PathVariable int seatNumber) throws SeatNotFoundException {
+    public ResponseEntity<Object> getSeatBySeatNumber(@PathVariable String seatNumber) throws SeatNotFoundException {
         Seat seat;
         try{
             seat = seatService.getSeatBySeatNumber(seatNumber);
@@ -46,6 +48,11 @@ public class SeatController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(seat);
+    }
+    @GetMapping("/seats/{showId}")
+    public ResponseEntity<Object> getSeatsByShowId(@PathVariable int showId) {
+        List<Seat> seats;
+        return null;
     }
 
 }

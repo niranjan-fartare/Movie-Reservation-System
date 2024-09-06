@@ -41,6 +41,9 @@ public class InitService {
     private MovieRepo movieRepo;
     @Autowired
     private ShowService showService;
+    @Autowired
+    private UserRepo userRepo;
+
     @Transactional
     public boolean init() throws CityValidationException, CityNotFoundException, TheatreValidationException, TheatreNotFoundException, AuditoriumValidationException, SeatValidationException, SeatNotFoundException, AuditoriumNotFoundException {
         CityDTO cityDTO = new CityDTO();
@@ -89,6 +92,11 @@ public class InitService {
         showDTO.setAuditoriumId(auditoriumService.getAuditoriumById(1).getId());
 
         showService.saveShow(showDTO);
+        User niranjan = new User();
+        niranjan.setName("Niranjan");
+        niranjan.setPassword("1234");
+        niranjan.setEmail("me@niranjan.co");
+        userRepo.save(niranjan);
 
         return true;
     }

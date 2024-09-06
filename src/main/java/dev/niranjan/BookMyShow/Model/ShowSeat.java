@@ -20,12 +20,8 @@ public class ShowSeat extends BaseModel{
 //    private ShowSeatStatus showSeatStatus;
 
     private double price;
-
-    @ManyToOne
-    private Show show;
-
-    @ManyToOne
-    private Seat seat;
+    private int showId;
+    private int seatId;
 
     @Enumerated(EnumType.STRING)
     private ShowSeatStatus showSeatStatus;

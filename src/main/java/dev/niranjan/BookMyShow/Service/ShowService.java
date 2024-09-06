@@ -36,13 +36,14 @@ public class ShowService {
         show.setMovie(savedMovie);
 
         Auditorium savedAuditorium = auditoriumService.getAuditoriumById(showDTO.getAuditoriumId());
+        show.setAuditorium(savedAuditorium);
         List<ShowSeat> showSeats = new ArrayList<>();
         Show savedShow = showRepo.save(show);
         for(int i=1;i<=savedAuditorium.getCapacity();i++){
             ShowSeat showSeat = new ShowSeat();
             showSeat.setPrice(1000);
-            showSeat.setShow(show);
-            showSeat.setSeat(savedAuditorium.getSeats().get(i-1));
+            showSeat.setShowId(show.getId());
+            showSeat.setSeatId(savedAuditorium.getSeats().get(i-1).getId());
             showSeat.setShowSeatStatus(ShowSeatStatus.AVAILABLE);
             showSeatService.saveShowSeat(showSeat);
             showSeats.add(showSeat);

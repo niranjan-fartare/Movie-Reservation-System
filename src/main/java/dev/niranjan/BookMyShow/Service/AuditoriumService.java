@@ -42,7 +42,7 @@ public class AuditoriumService {
         auditorium.setName(auditoriumDTO.getName());
         auditorium.setAuditoriumFeatures(auditoriumDTO.getAuditoriumFeatures());
         auditorium.setCapacity(auditoriumDTO.getCapacity());
-
+        auditorium.setTheatre(theatreService.getTheatreById(auditoriumDTO.getTheatreId()));
         Auditorium savedAuditorium = audiRepo.save(auditorium);
 
         List<Seat> seats = new ArrayList<>();
@@ -63,6 +63,7 @@ public class AuditoriumService {
         List<Auditorium> auditoriums = savedTheatre.getAuditoriums();
         auditoriums.add(savedAuditorium);
         savedTheatre.setAuditoriums(auditoriums);
+
         theatreService.saveTheatre(savedTheatre);
         audiRepo.save(savedAuditorium);
         return true;

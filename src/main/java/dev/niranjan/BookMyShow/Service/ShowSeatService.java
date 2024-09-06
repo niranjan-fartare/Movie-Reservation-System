@@ -22,7 +22,7 @@ public class ShowSeatService {
         }
         ShowSeat showSeat = new ShowSeat();
         Seat savedSeat = seatService.getSeatById(showSeatDTO.getSeatId());
-        showSeat.setSeat(savedSeat);
+        showSeat.setSeatId(savedSeat.getId());
         return true;
     }
 

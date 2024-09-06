@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 public class TicketController {
     @Autowired
-    TicketService ticketService = new TicketService();
+    TicketService ticketService;
 
     @PostMapping("/bookTicket")
     public ResponseEntity<Object> bookTicket(@RequestBody BookTicketDTO bookTicketDTO) throws Exception {
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(ticketService.bookTicket(bookTicketDTO.getShowSeatIds(), bookTicketDTO.getUserId()))   ;
+            ticketService.bookTicket(bookTicketDTO.getShowSeatIds(), bookTicketDTO.getUserId());
+            return ResponseEntity.status(HttpStatus.CREATED).body("Ticket booked Successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

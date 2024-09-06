@@ -18,4 +18,6 @@ public class Show extends BaseModel{
     private Movie movie;
     @OneToMany(fetch = FetchType.LAZY)
     private List<ShowSeat> showSeats;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Auditorium auditorium;
 }

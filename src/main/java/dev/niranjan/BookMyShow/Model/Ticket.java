@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 @Entity
 public class Ticket extends BaseModel{
+    @ManyToOne
+    private User user;
     private ShowTiming showTime;
     private double amount;
     @OneToMany

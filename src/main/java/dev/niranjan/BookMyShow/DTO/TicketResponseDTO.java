@@ -12,12 +12,13 @@ import java.util.List;
 @Setter
 public class TicketResponseDTO {
     private String userName;
+    private String movieTitle;
+    private ShowTiming showTiming;
     private String theaterName;
     private String theaterAddress;
     private String auditoriumName;
-    private ShowTiming showTiming;
     private List<String> seats;
     private Double amount;
     private TicketStatus status;
-    private String movieTitle;
+
 }

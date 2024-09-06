@@ -4,6 +4,7 @@ import dev.niranjan.BookMyShow.DTO.TicketResponseDTO;
 import dev.niranjan.BookMyShow.Exception.SeatNotFoundException;
 import dev.niranjan.BookMyShow.Exception.TheatreNotFoundException;
 import dev.niranjan.BookMyShow.Exception.TicketNotFoundException;
+import dev.niranjan.BookMyShow.Model.Constant.SeatStatus;
 import dev.niranjan.BookMyShow.Model.Constant.ShowSeatStatus;
 import dev.niranjan.BookMyShow.Model.Constant.TicketStatus;
 import dev.niranjan.BookMyShow.Model.Seat;
@@ -39,6 +40,9 @@ public class TicketService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public boolean bookTicket(List<Integer> showSeatIDs, int userId) throws Exception {
+        if(showSeatIDs.isEmpty() && userId == 0){
+            throw new Exception("Show Seat IDs and User ID cannot be empty");
+        }
         Ticket ticket = new Ticket();
         for(Integer showSeatID : showSeatIDs){
             ShowSeat showSeat = showSeatService.getShowSeat(showSeatID);
@@ -48,7 +52,7 @@ public class TicketService {
         }
         for(Integer showSeatID : showSeatIDs){
             ShowSeat showSeat = showSeatService.getShowSeat(showSeatID);
-            showSeat.setShowSeatStatus(ShowSeatStatus.LOCKED);
+            showSeat.setShowSeatStatus(ShowSeatStatus.BOOKED);
             showSeatService.saveShowSeat(showSeat);
         }
         List<ShowSeat> showSeats = new ArrayList<>();
@@ -56,7 +60,7 @@ public class TicketService {
             ShowSeat showSeat = showSeatService.getShowSeat(showSeatID);
             showSeats.add(showSeat);
         }
-        Show show = showService.findById(showSeatIDs.get(0));
+        Show show = showService.findById(showSeatService.getShowSeat(showSeatIDs.getFirst()).getShowId());
         ticket.setShowSeats(showSeats);
         ticket.setUser(userRepo.getReferenceById(userId));
 //        ticket.setShow(show);

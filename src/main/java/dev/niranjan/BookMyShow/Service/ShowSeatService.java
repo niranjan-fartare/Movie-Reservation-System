@@ -26,8 +26,8 @@ public class ShowSeatService {
         return true;
     }
 
-    public ShowSeat getShowSeat(int seatId) {
-        return  showSeatRepo.findById(seatId).get();
+    public ShowSeat getShowSeat(int showSeatId) {
+        return  showSeatRepo.findById(showSeatId).get();
     }
 
     public ShowSeat saveShowSeat(ShowSeat showSeat) {

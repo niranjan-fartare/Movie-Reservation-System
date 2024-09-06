@@ -1,5 +1,6 @@
 package dev.niranjan.BookMyShow.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.niranjan.BookMyShow.Model.Constant.AuditoriumFeature;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public class Auditorium extends BaseModel{
     @Enumerated(EnumType.STRING) //Creates relation between Entity and Enums
     private List<AuditoriumFeature> auditoriumFeatures;
     @ManyToOne
+    @JsonIgnore
     private Theatre theatre;
 }

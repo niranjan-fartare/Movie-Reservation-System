@@ -1,5 +1,6 @@
 package dev.niranjan.BookMyShow.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.niranjan.BookMyShow.Model.Constant.ShowTiming;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,8 +17,10 @@ public class Show extends BaseModel{
     private ShowTiming showTiming;
     @ManyToOne
     private Movie movie;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
+    @JsonIgnore
     private List<ShowSeat> showSeats;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     private Auditorium auditorium;
 }
